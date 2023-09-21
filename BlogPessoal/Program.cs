@@ -1,7 +1,17 @@
+using BlogPessoal.Services;
+using BlogPessoal.Util;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<RenderizadorImagens>();
+builder.Services.AddScoped<ConversorHtml>();
+builder.Services.AddScoped<GoogleAuthenticator>();
+builder.Services.AddScoped<GoogleDriveService>();
+builder.Services.AddScoped<GoogleSheetsService>();
+
 
 var app = builder.Build();
 

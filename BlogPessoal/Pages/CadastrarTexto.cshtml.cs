@@ -8,17 +8,21 @@ namespace BlogPessoal.Pages.Shared
 {
     public class CadastrarTextoModel : PageModel
     {
+        private readonly GoogleDriveService _driveService;
+        public CadastrarTextoModel(GoogleDriveService driveService)
+        {
+            _driveService = driveService;
+        }
         public string TitlePagina { get; set; }
         public string ConteudoHtml { get; set; }
         public void OnGet(string parametro)
         {
             TitlePagina = MapeadorDocumentos.GetTitleDocumento(parametro);
-            DriveService servicoDrive = GoogleDriveService.AutenticarContaDeServico();
-            string idDoArquivo = parametro;// GoogleDriveService.ObterIdDoArquivoPorNome(servicoDrive, parametro, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            string idDoArquivo = parametro;
             
             if (idDoArquivo != null)
             {
-                ConteudoHtml = GoogleDriveService.ObterConteudoDocxComoHtml(servicoDrive, idDoArquivo);                
+                ConteudoHtml = _driveService.ObterConteudoDocxComoHtml(idDoArquivo);                
             }
             else
             {

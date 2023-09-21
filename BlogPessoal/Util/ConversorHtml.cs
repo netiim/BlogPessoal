@@ -4,9 +4,14 @@ using System.Text.RegularExpressions;
 
 namespace BlogPessoal.Util
 {
-    public abstract class ConversorHtml
+    public class ConversorHtml
     {
-        public static string ConverteDOCXemHTML(Document doc)
+        private readonly RenderizadorImagens _renderizadorImagem;
+        public ConversorHtml(RenderizadorImagens renderizadorImagem)
+        {
+            _renderizadorImagem = renderizadorImagem;
+        }
+        public string ConverteDOCXemHTML(Document doc)
         {
             HtmlSaveOptions saveOptions = new HtmlSaveOptions();
             saveOptions.CssStyleSheetType = CssStyleSheetType.Inline;
@@ -23,7 +28,7 @@ namespace BlogPessoal.Util
             string html = reader.ReadToEnd();
             TratarHtml(ref html);
             List<string> codigoImagens = EncontrarImagens(html);
-            RenderizadorImagens.AdicionaImagens(codigoImagens, ref html);
+            _renderizadorImagem.AdicionaImagens(codigoImagens, ref html);
             return html;
         }
         static List<string> EncontrarImagens(string texto)

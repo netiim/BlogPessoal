@@ -10,36 +10,22 @@ namespace BlogPessoal.Services
 {
     public class GoogleDriveService
     {
-        private static string ApplicationName = "BlogPessoal";
-        private static string ServiceAccountKeyPath = "C:\\Users\\Pessoal\\Desktop\\BlogPessoal\\BlogPessoal\\bin\\Debug\\net6.0\\credentials.json"; 
+        private DriveService _driveService;
+        private ConversorHtml _conversorHtml;
 
-        public static DriveService AutenticarContaDeServico()
+        public GoogleDriveService(GoogleAuthenticator authenticator, ConversorHtml conversorHtml)
         {
-            GoogleCredential credential;
-
-            using (var stream = new FileStream(ServiceAccountKeyPath, FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleCredential.FromStream(stream)
-                    .CreateScoped(DriveService.Scope.Drive);
-            }
-
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            return service;
+            _driveService = authenticator.GetDriveService();
+            _conversorHtml = conversorHtml;
         }
-
-        public static string ObterConteudoDocxComoHtml(DriveService servicoDrive, string idDoArquivo)
-        {
-            var request = servicoDrive.Files.Export(idDoArquivo, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        public string ObterConteudoDocxComoHtml(string idDoArquivo)
+        { 
+            var request = _driveService.Files.Export(idDoArquivo, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             using (var stream = new MemoryStream())
             {
                 request.Download(stream);
 
-                string html = Util.ConversorHtml.ConverteDOCXemHTML(new Document(stream));
+                string html = _conversorHtml.ConverteDOCXemHTML(new Document(stream));
 
                 return html;
             }
