@@ -1,0 +1,9 @@
+﻿@page
+@model BlogPessoal.Pages.Shared.CadastrarTextoModel
+@{
+    ViewData["Title"] = Model.TitlePagina;
+}
+<div class="text-left">
+     @Html.Raw(Model.ConteudoHtml)
+</div>
+ 

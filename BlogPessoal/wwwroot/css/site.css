@@ -1,0 +1,56 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#sidebar {
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    background: #333;
+    /* Adicione outros estilos conforme necessário */
+}
+
+#content {
+    margin-left: 250px; /* A largura do menu lateral */
+}
+
+/* Estilos para o botão de toggle */
+#sidebarCollapse {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+
+    #sidebarCollapse {
+        display: block;
+        position: fixed;
+        left: 10px;
+        top: 10px;
+    }
+
+    #sidebar.active {
+        display: block;
+    }
+
+    #content {
+        margin-left: 0;
+    }
+}
