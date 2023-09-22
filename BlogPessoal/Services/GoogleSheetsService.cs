@@ -14,7 +14,7 @@ namespace BlogPessoal.Services
         {
             _sheetService = authenticator.GetSheetsService();
         }
-        public Dictionary<string, string> BuscarValoresDocumento()
+        public Dictionary<string, string> PreencherMapeamentoImagens()
         {
             string idDoArquivo = "14WAhfvLWZSaJbsB-OS3WcQu_ZdYi1121dwVIvuUZ2Ns";
 
