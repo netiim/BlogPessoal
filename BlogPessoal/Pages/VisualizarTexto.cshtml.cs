@@ -1,3 +1,4 @@
+using BlogPessoal.Interfaces;
 using BlogPessoal.Services;
 using BlogPessoal.Util;
 using Google.Apis.Drive.v3;
@@ -8,8 +9,8 @@ namespace BlogPessoal.Pages.Shared
 {
     public class CadastrarTextoModel : PageModel
     {
-        private readonly GoogleDriveService _driveService;
-        public CadastrarTextoModel(GoogleDriveService driveService)
+        private readonly IDriveService _driveService;
+        public CadastrarTextoModel(IDriveService driveService)
         {
             _driveService = driveService;
         }

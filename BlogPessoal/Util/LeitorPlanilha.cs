@@ -1,13 +1,13 @@
 ﻿using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 
-namespace BlogPessoal.Services
+namespace BlogPessoal.Util
 {
-    public static class PlanilhaService
+    public static class LeitorPlanilha
     {
         public static Dictionary<string, string> LerPlanilha(IList<IList<object>> values)
         {
-            Dictionary<string, string> menuDictionary = new Dictionary<string, string>();            
+            Dictionary<string, string> menuDictionary = new Dictionary<string, string>();
 
             if (values != null && values.Count > 0)
             {
@@ -24,6 +24,6 @@ namespace BlogPessoal.Services
             }
 
             return menuDictionary;
-        }        
+        }
     }
 }

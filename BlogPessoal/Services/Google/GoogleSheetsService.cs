@@ -1,16 +1,17 @@
-﻿using BlogPessoal.Util;
+﻿using BlogPessoal.Interfaces;
+using BlogPessoal.Util;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 
-namespace BlogPessoal.Services
+namespace BlogPessoal.Services.Google
 {
-    public class GoogleSheetsService
+    public class GoogleSheetsService : ISheetService
     {
         private SheetsService _sheetService;
 
-        public  GoogleSheetsService(GoogleAuthenticator authenticator)
+        public GoogleSheetsService(IAutenticavel authenticator)
         {
             _sheetService = authenticator.GetSheetsService();
         }
@@ -26,7 +27,7 @@ namespace BlogPessoal.Services
 
             IList<IList<object>> values = response.Values;
 
-            var result = PlanilhaService.LerPlanilha(values);
+            var result = LeitorPlanilha.LerPlanilha(values);
 
             return result;
         }

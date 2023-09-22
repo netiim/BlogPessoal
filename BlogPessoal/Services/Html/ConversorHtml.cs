@@ -1,15 +1,16 @@
 ﻿using Aspose.Words;
 using Aspose.Words.Saving;
-using BlogPessoal.Services;
+using BlogPessoal.Interfaces;
+using BlogPessoal.Services.Imagem;
 using System.Text.RegularExpressions;
 
-namespace BlogPessoal.Util
+namespace BlogPessoal.Services.Html
 {
-    public class ConversorHtml
+    public class ConversorHtml : IConversorHtml
     {
-        private readonly RenderizadorImagens _renderizadorImagem;
-        private readonly GoogleSheetsService _sheetService;
-        public ConversorHtml(RenderizadorImagens renderizadorImagem, GoogleSheetsService sheetService)
+        private readonly IRenderizadorImagem _renderizadorImagem;
+        private readonly ISheetService _sheetService;
+        public ConversorHtml(IRenderizadorImagem renderizadorImagem, ISheetService sheetService)
         {
             _renderizadorImagem = renderizadorImagem;
             _sheetService = sheetService;
@@ -31,7 +32,6 @@ namespace BlogPessoal.Util
             string html = reader.ReadToEnd();
             OcultarCodigosPropagandas(ref html); //Usamos uma versão free essa parte da replace em alguns lugares
             List<string> codigoImagens = EncontrarCodigosImagensNoHTML(html);
-            _renderizadorImagem.mapImagens = _sheetService.PreencherMapeamentoImagens();
             _renderizadorImagem.AdicionaImagens(codigoImagens, ref html);
 
             return html;
@@ -43,7 +43,7 @@ namespace BlogPessoal.Util
             // Expressão regular para encontrar conteúdo entre marcadores
             string pattern = $"{Regex.Escape("@#")}(.*?){Regex.Escape("#@")}";
             Regex regex = new Regex(pattern);
-             
+
             MatchCollection matches = regex.Matches(texto);
 
             foreach (Match match in matches)

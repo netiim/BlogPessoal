@@ -1,16 +1,18 @@
-using BlogPessoal.Services;
-using BlogPessoal.Util;
+using BlogPessoal.Interfaces;
+using BlogPessoal.Services.Google;
+using BlogPessoal.Services.Html;
+using BlogPessoal.Services.Imagem;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<RenderizadorImagens>();
-builder.Services.AddScoped<ConversorHtml>();
-builder.Services.AddScoped<GoogleAuthenticator>();
-builder.Services.AddScoped<GoogleDriveService>();
-builder.Services.AddScoped<GoogleSheetsService>();
+builder.Services.AddScoped<IRenderizadorImagem, RenderizadorImagens>();
+builder.Services.AddScoped<IConversorHtml, ConversorHtml>();
+builder.Services.AddScoped<IAutenticavel, GoogleAuthenticator>();
+builder.Services.AddScoped<IDriveService,GoogleDriveService>();
+builder.Services.AddScoped<ISheetService,GoogleSheetsService>();
 
 
 var app = builder.Build();
